@@ -1,6 +1,8 @@
+// src/components/Navbar.jsx
 import React, { useEffect, useState } from "react";
-import { getCurrentUser, logout } from "../appwrite/auth";
 import { useNavigate } from "react-router-dom";
+import { getCurrentUser, logout } from "../appwrite/auth";
+import CartIcon from "./CartIcon"; // ✅ Importing the CartIcon component
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
@@ -23,11 +25,15 @@ const Navbar = () => {
 
   return (
     <nav className="bg-[#31859c] text-white px-4 py-3 flex justify-between items-center">
-      <h1 className="text-2xl font-bold">SnapCart</h1>
+      <h1 className="text-2xl font-bold cursor-pointer" onClick={() => navigate("/")}>
+        SnapCart
+      </h1>
       <div className="flex items-center gap-4">
+        {/* ✅ Cart icon always visible */}
+        <CartIcon />
         {user ? (
           <>
-            <span className="font-medium">Hi, {user.name} 👋</span>
+            <span className="font-medium hidden sm:inline">Hi, {user.name} 👋</span>
             <button
               onClick={handleLogout}
               className="bg-white text-[#31859c] px-3 py-1 rounded hover:bg-gray-100"

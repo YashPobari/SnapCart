@@ -16,20 +16,30 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
             <nav className="p-4">
                 <ul className="space-y-2">
-                    <li className="p-3 rounded-md hover:bg-gray-200 cursor-pointer transition">
-                        Home
+                    <li>
+                        <button className="w-full text-left p-3 rounded-md hover:bg-gray-200 transition">
+                            Home
+                        </button>
                     </li>
-                    <li className="p-3 rounded-md hover:bg-gray-200 cursor-pointer transition">
-                        Categories
+                    <li>
+                        <button className="w-full text-left p-3 rounded-md hover:bg-gray-200 transition">
+                            Categories
+                        </button>
                     </li>
-                    <li className="p-3 rounded-md hover:bg-gray-200 cursor-pointer transition">
-                        My Cart
+                    <li>
+                        <button className="w-full text-left p-3 rounded-md hover:bg-gray-200 transition">
+                            My Cart
+                        </button>
                     </li>
-                    <li className="p-3 rounded-md hover:bg-gray-200 cursor-pointer transition">
-                        Orders
+                    <li>
+                        <button className="w-full text-left p-3 rounded-md hover:bg-gray-200 transition">
+                            Orders
+                        </button>
                     </li>
-                    <li className="p-3 rounded-md hover:bg-gray-200 cursor-pointer transition">
-                        Profile
+                    <li>
+                        <button className="w-full text-left p-3 rounded-md hover:bg-gray-200 transition">
+                            Profile
+                        </button>
                     </li>
                 </ul>
             </nav>

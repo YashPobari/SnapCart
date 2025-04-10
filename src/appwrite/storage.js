@@ -1,10 +1,5 @@
-import { Client, Storage } from "appwrite";
-
-const client = new Client()
-  .setEndpoint(import.meta.env.VITE_APPWRITE_URL)
-  .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID);
-
-const storage = new Storage(client);
+// src/appwrite/storage.js
+import { storage } from "./config";
 
 export const getImagePreview = (fileId) => {
   return storage.getFilePreview(
@@ -12,5 +7,3 @@ export const getImagePreview = (fileId) => {
     fileId
   ).href;
 };
-
-export { storage };

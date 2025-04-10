@@ -10,30 +10,12 @@ const Auth = () => {
 
     const handleAuth = async (e) => {
         e.preventDefault();
-        console.log("Email:", email);
-        console.log("Password:", password);
-
-        console.log("isLogin", isLogin)
         try {
             if (isLogin) {
                 const session = await account.createEmailPasswordSession(email, password);
-                console.log("Session:", session);
                 alert("Login successful!");
             } else {
-
-                console.log("check creation", {
-                    userId: ID.unique(),
-                    email,
-                    password,
-                    name,
-                })
-                const user = await account.create(
-                    ID.unique(),
-                    email,
-                    password,
-                    name,
-                );
-                console.log("Signup:", user);
+                await account.create(ID.unique(), email, password, name);
                 alert("Signup successful! Now log in.");
                 setIsLogin(true);
             }
@@ -42,9 +24,6 @@ const Auth = () => {
             alert(error.message || "Something went wrong");
         }
     };
-
-
-
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4">

@@ -1,30 +1,13 @@
+// src/components/Categories.jsx
 import React from "react";
 
 const categories = [
-    {
-        name: "Fruits & Vegetables",
-        icon: "🥦",
-    },
-    {
-        name: "Dairy & Eggs",
-        icon: "🥚",
-    },
-    {
-        name: "Beverages",
-        icon: "🥤",
-    },
-    {
-        name: "Snacks",
-        icon: "🍪",
-    },
-    {
-        name: "Bakery",
-        icon: "🍞",
-    },
-    {
-        name: "Frozen Foods",
-        icon: "❄️",
-    },
+    { name: "Fruits & Vegetables", icon: "🥦" },
+    { name: "Dairy & Eggs", icon: "🥚" },
+    { name: "Beverages", icon: "🥤" },
+    { name: "Snacks", icon: "🍪" },
+    { name: "Bakery", icon: "🍞" },
+    { name: "Frozen Foods", icon: "❄️" },
 ];
 
 const Categories = () => {
