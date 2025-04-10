@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { getCurrentUser, logout } from "../appwrite/auth";
 import { FaBars } from "react-icons/fa";
 import CartIcon from "./CartIcon";
+import logo from "../assets/snapcart-logo.png"
+
 
 const Navbar = ({ toggleSidebar }) => {
   const [user, setUser] = useState(null);
@@ -24,17 +26,21 @@ const Navbar = ({ toggleSidebar }) => {
   };
 
   return (
-    <nav className="bg-[#31859c] text-white px-4 py-3 flex justify-between items-center">
-      <h1 className="text-2xl font-bold cursor-pointer" onClick={() => navigate("/")}>
-        SnapCart
-      </h1>
+    <nav className="bg-amber-200 text-white px-4 py-3 flex justify-between items-center">
+      <img
+        src={logo}
+        alt="SnapCart Logo"
+        className="h-auto w-[150px] cursor-pointer object-contain"
+        onClick={() => navigate("/")}
+      />
+
 
       <div className="flex items-center gap-4">
         <button onClick={toggleSidebar} className="text-2xl cursor-pointer">
-              <FaBars />
-            </button>
+          <FaBars />
+        </button>
 
-            <CartIcon />
+        <CartIcon />
         {user ? (
           <>
             <span className="font-medium hidden sm:inline">Hi, {user.name} 👋</span>
