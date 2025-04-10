@@ -4,13 +4,13 @@ import { useCart } from "../context/CartContext";
 
 const CartIcon = () => {
   const { cartItems } = useCart();
-  const totalItems = cartItems.length;
+  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <div className="relative cursor-pointer">
-      <FaShoppingCart size={24} />
+    <div className="relative">
+      <FaShoppingCart className="text-2xl cursor-pointer" />
       {totalItems > 0 && (
-        <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
           {totalItems}
         </span>
       )}
