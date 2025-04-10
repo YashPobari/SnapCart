@@ -1,12 +1,8 @@
-// src/appwrite/products.js
-
 import { Databases } from "appwrite";
 import { client } from "./config";
 
-// Initialize database instance
 const databases = new Databases(client);
 
-// Fetch products from Appwrite database
 export const getProducts = async () => {
   try {
     const res = await databases.listDocuments(

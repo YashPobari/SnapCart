@@ -1,4 +1,3 @@
-// src/appwrite/storage.js
 import { storage } from "./config";
 
 export const getImagePreview = (fileId) => {

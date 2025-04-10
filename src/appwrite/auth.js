@@ -1,15 +1,13 @@
-// src/appwrite/auth.js
-
 import { Client, Account, ID } from "appwrite";
 
-// Initialize Appwrite Client
+
 const client = new Client()
-  .setEndpoint(import.meta.env.VITE_APPWRITE_URL) // e.g., https://cloud.appwrite.io/v1
-  .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID); // Your project ID
+  .setEndpoint(import.meta.env.VITE_APPWRITE_URL) 
+  .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID); 
 
 const account = new Account(client);
 
-// Sign Up New User
+// Sign Up
 export const signUp = async ({ email, password, name }) => {
   try {
     return await account.create(ID.unique(), email, password, name);
@@ -19,7 +17,7 @@ export const signUp = async ({ email, password, name }) => {
   }
 };
 
-// Login User
+// Login 
 export const login = async ({ email, password }) => {
   try {
     return await account.createEmailPasswordSession(email, password);
@@ -29,7 +27,7 @@ export const login = async ({ email, password }) => {
   }
 };
 
-// Get Current Logged-In User
+// Current Logged-In User
 export const getCurrentUser = async () => {
   try {
     return await account.get();
@@ -39,7 +37,7 @@ export const getCurrentUser = async () => {
   }
 };
 
-// Logout User
+// Logout 
 export const logout = async () => {
   try {
     await account.deleteSession("current");
