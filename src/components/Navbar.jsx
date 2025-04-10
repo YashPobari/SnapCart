@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser, logout } from "../appwrite/auth";
-import CartIcon from "./CartIcon"; // ✅ Importing the CartIcon component
+import CartIcon from "./CartIcon"; 
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
@@ -29,7 +29,6 @@ const Navbar = () => {
         SnapCart
       </h1>
       <div className="flex items-center gap-4">
-        {/* ✅ Cart icon always visible */}
         <CartIcon />
         {user ? (
           <>
