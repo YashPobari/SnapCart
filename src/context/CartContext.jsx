@@ -1,9 +1,16 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-    const [cartItems, setCartItems] = useState([]);
+    const [cartItems, setCartItems] = useState(() => {
+        const storedCart = localStorage.getItem("snapcart-cart");
+        return storedCart ? JSON.parse(storedCart) : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem("snapcart-cart", JSON.stringify(cartItems));
+    }, [cartItems]);
 
     const addToCart = (item) => {
         setCartItems((prevItems) => {
