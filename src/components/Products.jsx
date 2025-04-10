@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { appwriteDatabases } from "../appwrite/database";
 import { useCart } from "../context/CartContext";
 
-const Products = () => {
+const Products = ({ selectedCategory }) => {
   const [products, setProducts] = useState([]);
   const { cartItems, addToCart, updateQuantity, removeFromCart } = useCart();
 
@@ -33,11 +33,15 @@ const Products = () => {
     return item?.quantity || 0;
   };
 
+  const filteredProducts = selectedCategory
+    ? products.filter((product) => product.category === selectedCategory)
+    : products;
+
   return (
     <section className="products py-10 px-4 text-center">
       <h2 className="text-3xl font-bold mb-8">Popular Products</h2>
       <div className="product-list flex flex-wrap justify-center gap-6">
-        {products.map((product) => {
+        {filteredProducts.map((product) => {
           const quantity = getProductQuantity(product.$id);
 
           return (
