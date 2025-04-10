@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser, logout } from "../appwrite/auth";
-import CartIcon from "./CartIcon"; 
+import { FaBars } from "react-icons/fa";
+import CartIcon from "./CartIcon";
 
-const Navbar = () => {
+const Navbar = ({ toggleSidebar }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
@@ -27,8 +28,13 @@ const Navbar = () => {
       <h1 className="text-2xl font-bold cursor-pointer" onClick={() => navigate("/")}>
         SnapCart
       </h1>
+
       <div className="flex items-center gap-4">
-        <CartIcon />
+        <button onClick={toggleSidebar} className="text-2xl cursor-pointer">
+              <FaBars />
+            </button>
+
+            <CartIcon />
         {user ? (
           <>
             <span className="font-medium hidden sm:inline">Hi, {user.name} 👋</span>
