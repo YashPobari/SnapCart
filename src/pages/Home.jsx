@@ -7,9 +7,14 @@ import Products from "../components/Products";
 
 const Home = () => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState("")
+    const [selectedCategory, setSelectedCategory] = useState("");
+
     const toggleSidebar = () => {
         setSidebarOpen((prev) => !prev);
+    };
+
+    const handleCategorySelect = (categoryName) => {
+        setSelectedCategory(categoryName);
     };
 
     return (
@@ -19,7 +24,7 @@ const Home = () => {
 
             <main className="pt-16 px-4 sm:px-8">
                 <HeroSection />
-                <Categories onSelectCategory={(category) => setSelectedCategory(category)} />
+                <Categories onSelectCategory={handleCategorySelect} />
                 <Products selectedCategory={selectedCategory} />
             </main>
         </div>

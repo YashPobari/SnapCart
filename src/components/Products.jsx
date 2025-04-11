@@ -68,13 +68,11 @@ const Products = ({ selectedCategory }) => {
               ) : (
                 <div className="flex items-center justify-center gap-3 mt-2">
                   <button
-                    onClick={() => {
-                      if (quantity === 1) {
-                        removeFromCart(product.$id);
-                      } else {
-                        updateQuantity(product.$id, quantity - 1);
-                      }
-                    }}
+                    onClick={() =>
+                      quantity === 1
+                        ? removeFromCart(product.$id)
+                        : updateQuantity(product.$id, quantity - 1)
+                    }
                     className="bg-[#31859c] text-white px-2 py-1 rounded hover:bg-[#256a7a]"
                   >
                     −
