@@ -4,38 +4,40 @@ import { appwriteDatabases } from "../appwrite/database";
 import Navbar from "../components/Navbar";
 
 const CategoryPage = () => {
-  const { categoryId } = useParams(); 
+  const { categoryId } = useParams();
 
-  const [categoryName, setCategoryName] = useState(""); 
+  const [categoryName, setCategoryName] = useState("");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCategoryAndProducts = async () => {
       try {
-        // Fetch category document using ID
+        
         const categoryDoc = await appwriteDatabases.getDocument(
           import.meta.env.VITE_APPWRITE_DATABASE_ID,
           import.meta.env.VITE_APPWRITE_COLLECTION_CATEGORIES,
           categoryId
         );
 
-        const fetchedCategoryName = categoryDoc.category;
+        const fetchedCategoryName = categoryDoc.name;
         setCategoryName(fetchedCategoryName);
 
-        // Fetch all products
+        
         const productResponse = await appwriteDatabases.listDocuments(
           import.meta.env.VITE_APPWRITE_DATABASE_ID,
           import.meta.env.VITE_APPWRITE_COLLECTION_PRODUCTS
         );
 
-        // Filter by matching category name
-        const filteredProducts = productResponse.documents.filter(
+        
+        const filtered = productResponse.documents.filter(
           (product) =>
-            product.category?.toLowerCase() === fetchedCategoryName.toLowerCase()
+            product.category &&
+            product.category.toLowerCase() === fetchedCategoryName.toLowerCase()
         );
 
-        const enrichedProducts = filteredProducts.map((product) => ({
+        
+        const enrichedProducts = filtered.map((product) => ({
           ...product,
           imageUrl: product.imageURL || "https://via.placeholder.com/150",
         }));
@@ -70,7 +72,7 @@ const CategoryPage = () => {
         ) : (
           <>
             <h2 className="text-3xl font-bold mb-8 text-center capitalize">
-              Products in "{categoryName}""
+              Products in "{categoryName}"
             </h2>
 
             {products.length > 0 ? (
