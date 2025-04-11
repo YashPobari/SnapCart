@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { appwriteDatabases } from "../appwrite/database";
 import Navbar from "../components/Navbar";
 import { Query } from "appwrite";
+import { useCart } from "../context/CartContext";
+import { CartControls } from "../components/CartControls"
 
 const CategoryPage = () => {
   const { categoryId } = useParams();
+  const { cartItems, addToCart } = useCart();
 
   const [categoryName, setCategoryName] = useState("");
   const [products, setProducts] = useState([]);
@@ -14,7 +17,6 @@ const CategoryPage = () => {
   useEffect(() => {
     const fetchCategoryAndProducts = async () => {
       try {
-        
         const categoryDoc = await appwriteDatabases.getDocument(
           import.meta.env.VITE_APPWRITE_DATABASE_ID,
           import.meta.env.VITE_APPWRITE_COLLECTION_CATEGORIES,
@@ -44,6 +46,10 @@ const CategoryPage = () => {
 
     fetchCategoryAndProducts();
   }, [categoryId]);
+
+  const handleAddToCart = (product) => {
+    addToCart(product);
+  }
 
   return (
     <div className="relative min-h-screen bg-gray-100">
@@ -84,6 +90,7 @@ const CategoryPage = () => {
                 <p className="text-[#31859c] font-semibold">
                   Price: {product.price}
                 </p>
+                <CartControls product={product} />
               </div>
             ))}
           </div>
