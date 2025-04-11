@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { appwriteDatabases } from "../appwrite/database";
 import Navbar from "../components/Navbar";
@@ -8,7 +8,7 @@ import { CartControls } from "../components/CartControls"
 
 const CategoryPage = () => {
   const { categoryId } = useParams();
-  const { cartItems, addToCart } = useCart();
+  const { addToCart } = useCart();
 
   const [categoryName, setCategoryName] = useState("");
   const [products, setProducts] = useState([]);
