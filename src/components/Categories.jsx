@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { appwriteDatabases } from "../appwrite/database";
+import { useNavigate } from "react-router-dom";
 
-const Categories = ({ onSelectCategory }) => {
+const Categories = () => {
     const [categories, setCategories] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -11,7 +13,6 @@ const Categories = ({ onSelectCategory }) => {
                     import.meta.env.VITE_APPWRITE_DATABASE_ID,
                     import.meta.env.VITE_APPWRITE_COLLECTION_CATEGORIES
                 );
-
                 setCategories(response.documents);
             } catch (error) {
                 console.error("Error fetching categories:", error);
@@ -21,6 +22,11 @@ const Categories = ({ onSelectCategory }) => {
         fetchCategories();
     }, []);
 
+    const handleCategoryClick = (name) => {
+        const categorySlug = name.toLowerCase().replace(/\s+/g, "-");
+        navigate(`/category/${categorySlug}`);
+    };
+
     return (
         <section className="py-6 px-4">
             <h2 className="text-2xl font-bold text-center mb-6">Shop by Categories</h2>
@@ -28,9 +34,7 @@ const Categories = ({ onSelectCategory }) => {
                 {categories.map((category) => (
                     <div
                         key={category.$id}
-                        onClick={() =>
-                            onSelectCategory(category.name === "All Categories" ? "" : category.name)
-                        }
+                        onClick={() => handleCategoryClick(category.name)}
                         className="bg-white shadow-md rounded-xl text-center px-6 py-4 cursor-pointer transition-transform transform hover:scale-105 w-40"
                     >
                         {category.iconURL && (
