@@ -56,7 +56,7 @@ const Products = ({ selectedCategory }) => {
               />
               <h3 className="text-lg font-semibold">{product.name}</h3>
               <p className="text-[#31859c] font-semibold">Unit: {product.unit}</p>
-              <p className="text-[#31859c] font-semibold">Price: {product.price}</p>
+              <p className="text-[#31859c] font-semibold">Price:{product.price}</p>
 
               {quantity === 0 ? (
                 <button

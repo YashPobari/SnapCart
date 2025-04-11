@@ -34,7 +34,7 @@ const Categories = () => {
                 {categories.map((category) => (
                     <div
                         key={category.$id}
-                        onClick={() => handleCategoryClick(category.name)}
+                        onClick={() => handleCategoryClick(category.$id)}
                         className="bg-white shadow-md rounded-xl text-center px-6 py-4 cursor-pointer transition-transform transform hover:scale-105 w-40"
                     >
                         {category.iconURL && (
