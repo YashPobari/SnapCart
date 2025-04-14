@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { appwriteDatabases } from "../appwrite/database";
-import Navbar from "../components/Navbar";
 import { Query } from "appwrite";
-import { useCart } from "../context/CartContext";
+import Navbar from "../components/Navbar";
+import ProductItem from "../components/ProductItem";
 
 const CategoryPage = () => {
   const { categoryId } = useParams();
-  const { cartItems, addToCart, updateQuantity, removeFromCart } = useCart();
 
   const [categoryName, setCategoryName] = useState("");
   const [products, setProducts] = useState([]);
@@ -46,11 +45,6 @@ const CategoryPage = () => {
     fetchCategoryAndProducts();
   }, [categoryId]);
 
-  const getProductQuantity = (productId) => {
-    const item = cartItems.find((i) => i.$id === productId);
-    return item?.quantity || 0;
-  };
-
   return (
     <div className="relative min-h-screen bg-gray-100">
       <Navbar />
@@ -73,58 +67,9 @@ const CategoryPage = () => {
           <p className="text-center text-gray-500">Loading...</p>
         ) : products.length > 0 ? (
           <div className="product-list flex flex-wrap justify-center gap-6">
-            {products.map((product) => {
-              const quantity = getProductQuantity(product.$id);
-
-              return (
-                <div
-                  key={product.$id}
-                  className="bg-white p-4 rounded-xl shadow-md w-[200px] hover:shadow-lg transition duration-300"
-                >
-                  <img
-                    src={product.imageUrl}
-                    alt={product.name}
-                    className="w-full h-[150px] object-contain mb-4"
-                  />
-                  <h3 className="text-lg font-semibold">{product.name}</h3>
-                  <p className="text-[#31859c] font-semibold">
-                    Unit: {product.unit}
-                  </p>
-                  <p className="text-[#31859c] font-semibold">
-                    Price: {product.price}
-                  </p>
-
-                  {quantity === 0 ? (
-                    <button
-                      onClick={() => addToCart(product)}
-                      className="mt-2 px-4 py-2 bg-[#31859c] text-white rounded hover:bg-[#256a7a]"
-                    >
-                      Add to Cart
-                    </button>
-                  ) : (
-                    <div className="flex items-center justify-center gap-3 mt-2">
-                      <button
-                        onClick={() =>
-                          quantity === 1
-                            ? removeFromCart(product.$id)
-                            : updateQuantity(product.$id, quantity - 1)
-                        }
-                        className="bg-[#31859c] text-white px-2 py-1 rounded hover:bg-[#256a7a]"
-                      >
-                        −
-                      </button>
-                      <span className="font-medium">{quantity}</span>
-                      <button
-                        onClick={() => updateQuantity(product.$id, quantity + 1)}
-                        className="bg-[#31859c] text-white px-2 py-1 rounded hover:bg-[#256a7a]"
-                      >
-                        +
-                      </button>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+            {products.map((product) => (
+              <ProductItem key={product.$id} product={product} />
+            ))}
           </div>
         ) : (
           <p className="text-center text-gray-500">No products found in this category.</p>
