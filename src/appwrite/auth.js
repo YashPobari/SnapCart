@@ -7,7 +7,7 @@ const client = new Client()
 
 const account = new Account(client);
 
-// Sign Up
+
 export const signUp = async ({ email, password, name }) => {
   try {
     return await account.create(ID.unique(), email, password, name);
@@ -17,7 +17,7 @@ export const signUp = async ({ email, password, name }) => {
   }
 };
 
-// Login 
+ 
 export const login = async ({ email, password }) => {
   try {
     return await account.createEmailPasswordSession(email, password);
@@ -27,7 +27,7 @@ export const login = async ({ email, password }) => {
   }
 };
 
-// Current Logged-In User
+
 export const getCurrentUser = async () => {
   try {
     return await account.get();
@@ -37,7 +37,7 @@ export const getCurrentUser = async () => {
   }
 };
 
-// Logout 
+ 
 export const logout = async () => {
   try {
     await account.deleteSession("current");
