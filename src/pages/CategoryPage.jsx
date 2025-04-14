@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { appwriteDatabases } from "../appwrite/database";
 import { Query } from "appwrite";
-import Navbar from "../components/Navbar";
+import TopNav from "../components/TopNav";
 import ProductItem from "../components/ProductItem";
 
 const CategoryPage = () => {
@@ -47,7 +47,7 @@ const CategoryPage = () => {
 
   return (
     <div className="relative min-h-screen bg-gray-100">
-      <Navbar />
+      <TopNav />
 
       <main className="pt-20 px-4 sm:px-8">
         <div className="mb-6 text-left">

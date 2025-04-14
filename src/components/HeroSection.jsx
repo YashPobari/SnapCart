@@ -1,14 +1,29 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
-    <section className="bg-[#f8f9fa] py-20 px-4 text-center">
-      <h1 className="text-4xl md:text-5xl font-bold mb-6">
-        Welcome to <span className="text-[#31859c]">SnapCart</span>
-      </h1>
-      <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-        Your one-stop shop for groceries, delivered fast and fresh right to your door.
-      </p>
+    <section className="relative bg-cover bg-center h-screen" style={{ backgroundImage: "url('https://via.placeholder.com/1500x600')" }}>
+      {/* Overlay for better readability */}
+      <div className="absolute inset-0 bg-black opacity-50"></div>
+
+      <div className="relative z-10 flex flex-col justify-center items-center text-center text-white px-6 md:px-12 py-24">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+          Welcome to SnapCart
+        </h1>
+        <p className="text-lg sm:text-xl mb-8">
+          Your one-stop shop for fresh groceries, delivered to your door!
+        </p>
+
+        <div className="flex space-x-4">
+          <Link to="/category/grains" className="bg-[#31859c] text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-[#256a7a] transition duration-200">
+            Shop Grains
+          </Link>
+          <Link to="/category/fruits" className="bg-[#31859c] text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-[#256a7a] transition duration-200">
+            Shop Fruits
+          </Link>
+        </div>
+      </div>
     </section>
   );
 };

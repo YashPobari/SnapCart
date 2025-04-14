@@ -128,7 +128,7 @@ snapcart/
 ├── src/
 │   ├── assets/
 │   ├── components/
-│   │   ├── Navbar.jsx
+│   │   ├── TopNav.jsx
 │   │   ├── ProductCard.jsx
 │   │   ├── Cart.jsx
 │   │   ├── Checkout.jsx
