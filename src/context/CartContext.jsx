@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import AddToCart from "../components/AddToCart"; // Import AddToCart component
+import AddToCart from "../components/AddToCart"; 
 
 const CartContext = createContext();
 
@@ -50,7 +50,7 @@ export const CartProvider = ({ children }) => {
                 removeFromCart,
                 clearCart,
                 updateQuantity,
-                AddToCart, // Provide AddToCart functionality
+                AddToCart, 
             }}
         >
             {children}

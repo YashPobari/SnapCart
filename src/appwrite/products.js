@@ -7,7 +7,7 @@ export const getProducts = async () => {
   try {
     const res = await databases.listDocuments(
       import.meta.env.VITE_APPWRITE_DATABASE_ID,
-      import.meta.env.VITE_APPWRITE_COLLECTION_PRODUCTS // Use env var for flexibility
+      import.meta.env.VITE_APPWRITE_COLLECTION_PRODUCTS 
     );
     return res.documents;
   } catch (error) {

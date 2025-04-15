@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const HeroSection = () => {
   return (
     <section className="relative bg-cover bg-center h-screen" style={{ backgroundImage: "url('https://via.placeholder.com/1500x600')" }}>
-      {/* Overlay for better readability */}
+      
       <div className="absolute inset-0 bg-black opacity-50"></div>
 
       <div className="relative z-10 flex flex-col justify-center items-center text-center text-white px-6 md:px-12 py-24">

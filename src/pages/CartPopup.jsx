@@ -32,7 +32,6 @@ const CartPopup = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   const totalAmount = cartItems.reduce((acc, item) => {
-    // Ensure item.price and item.quantity are valid numbers before calculating the total
     const price = parseFloat(item.price);
     const quantity = parseInt(item.quantity, 10);
 
@@ -46,7 +45,7 @@ const CartPopup = ({ isOpen, onClose }) => {
     if (quantity > 1) {
       updateQuantity(itemId, quantity - 1);
     } else {
-      removeFromCart(itemId); // Remove the item when quantity reaches 0
+      removeFromCart(itemId); 
     }
   };
 

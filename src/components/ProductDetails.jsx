@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { appwriteDatabases } from "../appwrite/database";
-import AddToCart from "../components/AddToCart"; // Import the AddToCart component
+import AddToCart from "../components/AddToCart"; 
 
 const ProductDetails = () => {
     const { productId } = useParams();
@@ -50,7 +50,7 @@ const ProductDetails = () => {
                             {product.description || "No description available."}
                         </p>
 
-                        <AddToCart product={product} /> {/* Use the AddToCart component here */}
+                        <AddToCart product={product} /> 
                     </div>
                 </div>
             </div>
