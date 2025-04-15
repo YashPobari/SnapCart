@@ -1,6 +1,7 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
+import AddToCart from "./AddToCart";
 
 const ProductItem = ({ product }) => {
   const { cartItems, addToCart, updateQuantity, removeFromCart } = useCart();
@@ -20,34 +21,7 @@ const ProductItem = ({ product }) => {
       <p className="text-[#31859c] font-semibold">Unit: {product.unit}</p>
       <p className="text-[#31859c] font-semibold">Price: {product.price}</p>
 
-      {quantity === 0 ? (
-        <button
-          onClick={() => addToCart(product)}
-          className="mt-2 px-4 py-2 bg-[#31859c] text-white rounded hover:bg-[#256a7a]"
-        >
-          Add to Cart
-        </button>
-      ) : (
-        <div className="flex items-center justify-center gap-3 mt-2">
-          <button
-            onClick={() =>
-              quantity === 1
-                ? removeFromCart(product.$id)
-                : updateQuantity(product.$id, quantity - 1)
-            }
-            className="bg-[#31859c] text-white px-2 py-1 rounded hover:bg-[#256a7a]"
-          >
-            −
-          </button>
-          <span className="font-medium">{quantity}</span>
-          <button
-            onClick={() => updateQuantity(product.$id, quantity + 1)}
-            className="bg-[#31859c] text-white px-2 py-1 rounded hover:bg-[#256a7a]"
-          >
-            +
-          </button>
-        </div>
-      )}
+      <AddToCart product={product} /> {/* Use the AddToCart component here */}
     </div>
   );
 };

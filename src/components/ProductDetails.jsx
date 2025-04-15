@@ -2,15 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { appwriteDatabases } from "../appwrite/database";
-import { useCart } from "../context/CartContext";
+import AddToCart from "../components/AddToCart"; // Import the AddToCart component
 
 const ProductDetails = () => {
     const { productId } = useParams();
     const [product, setProduct] = useState(null);
-
-    const { cartItems, addToCart, updateQuantity, removeFromCart } = useCart();
-
-    const quantity = cartItems.find((i) => i.$id === product?.$id)?.quantity || 0;
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -54,34 +50,7 @@ const ProductDetails = () => {
                             {product.description || "No description available."}
                         </p>
 
-                        {quantity === 0 ? (
-                            <button
-                                onClick={() => addToCart(product)}
-                                className="bg-[#31859c] text-white px-6 py-2 rounded hover:bg-[#256a7a]"
-                            >
-                                Add to Cart
-                            </button>
-                        ) : (
-                            <div className="flex items-center gap-4">
-                                <button
-                                    onClick={() =>
-                                        quantity === 1
-                                            ? removeFromCart(product.$id)
-                                            : updateQuantity(product.$id, quantity - 1)
-                                    }
-                                    className="bg-[#31859c] text-white px-3 py-1 rounded hover:bg-[#256a7a]"
-                                >
-                                    −
-                                </button>
-                                <span className="font-semibold">{quantity}</span>
-                                <button
-                                    onClick={() => updateQuantity(product.$id, quantity + 1)}
-                                    className="bg-[#31859c] text-white px-3 py-1 rounded hover:bg-[#256a7a]"
-                                >
-                                    +
-                                </button>
-                            </div>
-                        )}
+                        <AddToCart product={product} /> {/* Use the AddToCart component here */}
                     </div>
                 </div>
             </div>
@@ -90,3 +59,4 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
