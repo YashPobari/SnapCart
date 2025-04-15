@@ -1,4 +1,3 @@
-// src/components/CategoryNav.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { appwriteDatabases } from "../appwrite/database";
@@ -28,17 +27,18 @@ const CategoryNav = () => {
   };
 
   return (
-    <div className="relative flex justify-center bg-white shadow-sm border-b px-8 py-3 max-lg:hidden max-md:flex max-md:px-2">
-      <div className="flex space-x-6 overflow-x-auto scrollbar-hide">
+    <div className="relative flex justify-between border-b bg-white px-8 py-2.5 max-lg:hidden max-md:flex max-md:px-2">
+      <div className="flex space-x-4 overflow-x-auto scrollbar-hide">
         {categories.map((category) => (
           <div
             key={category.$id}
             onClick={() => handleClick(category.$id)}
-            className="min-w-[100px] cursor-pointer px-3 py-2 hover:bg-slate-100 rounded-lg transition-all duration-200"
+            className="flex flex-col items-center min-w-[80px] cursor-pointer hover:bg-gray-100 rounded-xl px-2 py-1 transition"
           >
-            <span className="item-transition relative flex w-fit text-sm font-medium text-slate-700 after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-slate-700 after:transition-all after:duration-300 hover:after:w-full">
+            <span className="relative flex w-fit text-sm text-slate-700 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-slate-700 after:transition-all after:duration-300 hover:after:w-full">
               {category.name}
             </span>
+
           </div>
         ))}
       </div>
