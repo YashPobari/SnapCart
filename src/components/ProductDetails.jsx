@@ -1,8 +1,9 @@
+// The page that is being redirected and showing products.
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { appwriteDatabases } from "../appwrite/database";
 import AddToCart from "../components/AddToCart";
-import Spinner from "../components/Spinner"; // ← Import spinner
+import Spinner from "../components/Spinner"; 
 
 const ProductDetails = () => {
     const { productId } = useParams();
