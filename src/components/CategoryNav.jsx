@@ -33,7 +33,7 @@ const CategoryNav = () => {
           <div
             key={category.$id}
             onClick={() => handleClick(category.$id)}
-            className="flex flex-col items-center min-w-[80px] cursor-pointer hover:bg-gray-100 rounded-xl px-2 py-1 transition"
+            className="flex flex-col items-center min-w-[80px] cursor-pointer rounded-xl px-2 py-1 transition"
           >
             <span className="relative flex w-fit text-sm text-slate-700 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-slate-700 after:transition-all after:duration-300 hover:after:w-full">
               {category.name}
