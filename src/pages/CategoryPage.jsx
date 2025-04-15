@@ -51,15 +51,6 @@ const CategoryPage = () => {
       <TopNav />
 
       <main className="pt-20 px-4 sm:px-8">
-        <div className="mb-6 text-left">
-          <Link
-            to="/"
-            className="inline-block bg-[#31859c] text-white px-4 py-2 rounded hover:bg-[#256a7a] transition duration-200"
-          >
-            ← Back to Home
-          </Link>
-        </div>
-
         <h2 className="text-3xl font-bold mb-8 text-center capitalize">
           Products in "{categoryName}"
         </h2>
