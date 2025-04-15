@@ -1,8 +1,8 @@
-// This is the page when i click on the product page or product name it redirects me to a new page and all the functionality work as same as in products component.
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { appwriteDatabases } from "../appwrite/database";
-import AddToCart from "../components/AddToCart"; 
+import AddToCart from "../components/AddToCart";
+import Spinner from "../components/Spinner"; // ← Import spinner
 
 const ProductDetails = () => {
     const { productId } = useParams();
@@ -27,9 +27,7 @@ const ProductDetails = () => {
         }
     }, [productId]);
 
-    if (!product) {
-        return <p className="text-center py-10 text-gray-500">Loading...</p>;
-    }
+    if (!product) return <Spinner />;
 
     return (
         <div className="py-8 bg-gray-100 min-h-screen">
@@ -49,8 +47,7 @@ const ProductDetails = () => {
                         <p className="mb-4 text-gray-600">
                             {product.description || "No description available."}
                         </p>
-
-                        <AddToCart product={product} /> 
+                        <AddToCart product={product} />
                     </div>
                 </div>
             </div>
@@ -59,4 +56,3 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
-

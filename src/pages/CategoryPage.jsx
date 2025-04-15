@@ -4,6 +4,7 @@ import { appwriteDatabases } from "../appwrite/database";
 import { Query } from "appwrite";
 import TopNav from "../components/TopNav";
 import ProductItem from "../components/ProductItem";
+import Spinner from "../components/Spinner"; // ← Import spinner
 
 const CategoryPage = () => {
   const { categoryId } = useParams();
@@ -64,7 +65,7 @@ const CategoryPage = () => {
         </h2>
 
         {loading ? (
-          <p className="text-center text-gray-500">Loading...</p>
+          <Spinner />
         ) : products.length > 0 ? (
           <div className="product-list flex flex-wrap justify-center gap-6">
             {products.map((product) => (
