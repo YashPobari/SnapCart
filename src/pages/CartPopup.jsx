@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import { useCart } from "../context/CartContext";
+import { useNavigate } from "react-router-dom"; // Importing useNavigate for React Router v6+
 
 const CartPopup = ({ isOpen, onClose }) => {
   const { cartItems, updateQuantity, removeFromCart } = useCart();
   const popupRef = useRef();
+  const navigate = useNavigate(); // Initialize navigate
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -32,11 +34,11 @@ const CartPopup = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   const totalAmount = cartItems.reduce((acc, item) => {
-    const price = parseFloat(item.price);
+    const productprice = parseFloat(item.productprice);
     const quantity = parseInt(item.quantity, 10);
 
-    if (!isNaN(price) && !isNaN(quantity)) {
-      return acc + price * quantity;
+    if (!isNaN(productprice) && !isNaN(quantity)) {
+      return acc + productprice * quantity;
     }
     return acc;
   }, 0);
@@ -45,7 +47,7 @@ const CartPopup = ({ isOpen, onClose }) => {
     if (quantity > 1) {
       updateQuantity(itemId, quantity - 1);
     } else {
-      removeFromCart(itemId); 
+      removeFromCart(itemId);
     }
   };
 
@@ -68,14 +70,14 @@ const CartPopup = ({ isOpen, onClose }) => {
           {cartItems.map((item, index) => (
             <div key={index} className="flex items-center gap-4 border-b pb-4">
               <img
-                src={item.image}
+                src={item.imageURL} // Corrected: Using imageURL here
                 alt={item.name}
                 className="w-16 h-16 object-contain"
               />
               <div className="flex flex-col flex-1">
                 <h3 className="text-sm font-medium">{item.name}</h3>
                 <p className="text-sm font-semibold text-gray-800">
-                  {item.price}{" "}
+                ₹{item.productprice}{" "}
                   <span className="text-xs text-gray-500">x {item.quantity}</span>
                 </p>
 
@@ -109,7 +111,7 @@ const CartPopup = ({ isOpen, onClose }) => {
             <span>₹{totalAmount.toFixed(2)}</span>
           </div>
           <button
-            onClick={() => alert("Checkout coming soon!")}
+            onClick={() => navigate("/checkout")} // Navigate to the Checkout page
             className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
           >
             Proceed to Checkout

@@ -1,11 +1,14 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
+import Header from "../components/Header";
 
 const Checkout = () => {
     const { cartItems } = useCart();
 
     const totalAmount = cartItems.reduce(
-        (acc, item) => acc + item.price * item.quantity,
+        (acc, item) => {
+            console.log("item ->", item)
+            return acc + item.productprice * item.quantity},
         0
     );
 
@@ -38,10 +41,12 @@ const Checkout = () => {
         const razorpay = new window.Razorpay(options);
         razorpay.open();
     };
-
+    
     return (
+        <div>
+            <Header />
         <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Shipping Details */}
+            
             <div className="bg-white p-6 rounded-lg shadow-md">
                 <h2 className="text-xl font-semibold mb-4">Shipping Details</h2>
                 <form className="space-y-4">
@@ -49,7 +54,7 @@ const Checkout = () => {
                         type="text"
                         placeholder="Full Name"
                         className="w-full border px-4 py-2 rounded"
-                    />
+                        />
                     <input
                         type="tel"
                         placeholder="Phone Number"
@@ -58,7 +63,7 @@ const Checkout = () => {
                     <textarea
                         placeholder="Address"
                         className="w-full border px-4 py-2 rounded"
-                    />
+                        />
                     <div className="grid grid-cols-2 gap-4">
                         <input
                             type="text"
@@ -75,7 +80,7 @@ const Checkout = () => {
                         type="text"
                         placeholder="Pincode"
                         className="w-full border px-4 py-2 rounded"
-                    />
+                        />
                 </form>
             </div>
 
@@ -87,10 +92,10 @@ const Checkout = () => {
                             <div>
                                 <h4 className="font-medium">{item.name}</h4>
                                 <p className="text-sm text-gray-600">
-                                    {item.quantity} x ₹{item.price}
+                                    {item.quantity} x   ₹{item.productprice}
                                 </p>
                             </div>
-                            <p className="font-semibold">₹{item.quantity * item.price}</p>
+                            <p className="font-semibold">₹{item.quantity * item.productprice}</p>
                         </div>
                     ))}
                 </div>
@@ -103,11 +108,12 @@ const Checkout = () => {
                 <button
                     onClick={handlePayment}
                     className="mt-6 w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
-                >
+                    >
                     Proceed to Payment
                 </button>
             </div>
         </div>
+                    </div>
     );
 };
 
