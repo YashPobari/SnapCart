@@ -5,7 +5,7 @@ import AddToCart from "./AddToCart";
 const ProductItem = ({ product }) => {
 
   return (
-    <div className="product bg-white p-4 rounded-xl shadow-md w-[200px] hover:shadow-lg transition duration-300">
+    <div className="product bg-white p-4 rounded-xl shadow-md w-[100] hover:shadow-lg transition duration-300">
       <Link to={`/product/${product.$id}`}>
         <img
           src={product.imageUrl}
