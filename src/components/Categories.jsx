@@ -38,7 +38,7 @@ const Categories = ({ onSelectCategory }) => {
               <img
                 src={category.iconURL || "https://via.placeholder.com/100"}
                 alt={category.name}
-                className="w-[60px] h-[60px] mb-4 object-contain"
+                className="w-[120px] h-[120px] mb-4 object-fill"
               />
               <span className="text-sm text-slate-700 font-medium">{category.name}</span>
             </Link>
