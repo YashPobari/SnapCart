@@ -31,7 +31,7 @@ const ProductItem = ({ product }) => {
         <h3 className="text-lg font-semibold hover:text-[#256a7a] transition">{product.name}</h3>
       </Link>
       <p className="text-[#31859c] font-semibold">Unit: {product.unit}</p>
-      <p className="text-[#31859c] font-semibold">Price: ₹{product.price}</p> 
+      <p className="text-[#31859c] font-semibold">Price: {product.price}</p> 
 
       <AddToCart product={product} />  
     </div>
