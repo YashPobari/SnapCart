@@ -54,7 +54,11 @@ const ProductDetails = () => {
                             <p className="mb-4 text-gray-600">
                                 {product.description || "No description available."}
                             </p>
-                            <AddToCart product={product} />
+                            {product.inStock ? (
+                                <AddToCart product={product} />
+                            ) : (
+                                <p className="text-red-500 font-semibold text-lg">Out of Stock</p>
+                            )}
                         </div>
                     </div>
                 </div>
