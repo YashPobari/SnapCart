@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { appwriteDatabases } from "../appwrite/database";
 import { Link } from "react-router-dom";
+import Spinner from "../components/Spinner";
 
 const Categories = ({ onSelectCategory }) => {
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -15,11 +17,21 @@ const Categories = ({ onSelectCategory }) => {
         setCategories(response.documents);
       } catch (error) {
         console.error("Error fetching categories:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchCategories();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <section className="py-12">

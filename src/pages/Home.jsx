@@ -25,8 +25,10 @@ const Home = () => {
 
             <main className="pt-16 px-4 sm:px-8">
                 <HeroSection />
+                <div>
                 <Categories onSelectCategory={handleCategorySelect} />
                 <Products selectedCategory={selectedCategory} />
+                </div>
             </main>
 
             <Footer />
