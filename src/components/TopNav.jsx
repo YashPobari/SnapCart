@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FiUser, FiShoppingCart, FiLayers } from "react-icons/fi";
+import { FiUser, FiShoppingCart} from "react-icons/fi";
 import { FaChevronDown } from "react-icons/fa";
 import CartPopup from "../pages/CartPopup";
 import { useCart } from "../context/CartContext";
@@ -32,7 +32,7 @@ const TopNav = () => {
       await account.deleteSession("current");
       setUser(null);
       alert("Logged out successfully.");
-      navigate("/");
+      navigate("/auth");
     } catch (error) {
       console.error("Logout failed:", error);
     }

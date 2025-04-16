@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { account } from "../appwrite/config";
 import { ID } from "appwrite";
+import { useNavigate } from "react-router-dom";
+
 
 const Auth = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
+    const navigate = useNavigate();
 
     const handleAuth = async (e) => {
         e.preventDefault();
@@ -14,6 +17,7 @@ const Auth = () => {
             if (isLogin) {
                 const session = await account.createEmailPasswordSession(email, password);
                 alert("Login successful!");
+                navigate("/")
             } else {
                 await account.create(ID.unique(), email, password, name);
                 alert("Signup successful! Now log in.");
