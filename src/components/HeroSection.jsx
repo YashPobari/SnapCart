@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
-    <section className="relative bg-cover bg-center h-screen" style={{ backgroundImage: "url('https://via.placeholder.com/1500x600')" }}>
+    <section className="relative bg-cover bg-center h-screen" style={{ backgroundImage: "url('/background_image.png')" }}>
       
       <div className="absolute inset-0 bg-black opacity-50"></div>
 
