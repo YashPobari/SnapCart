@@ -1,24 +1,49 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom"; // 🔹 Import Link
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FiUser, FiShoppingCart, FiLayers } from "react-icons/fi";
 import { FaChevronDown } from "react-icons/fa";
 import CartPopup from "../pages/CartPopup";
 import { useCart } from "../context/CartContext";
+import { account } from "../appwrite/config";
 
 const TopNav = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { cartItems } = useCart();
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
-  const toggleCart = () => {
-    setIsCartOpen((prev) => !prev);
-  };
+  const toggleCart = () => setIsCartOpen((prev) => !prev);
+  const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
 
   const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
+  const fetchUser = async () => {
+    try {
+      const userData = await account.get();
+      setUser(userData);
+    } catch (error) {
+      setUser(null);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await account.deleteSession("current");
+      setUser(null);
+      alert("Logged out successfully.");
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
     <div className="bg-white px-6 py-3 shadow-sm flex items-center justify-between border-b sticky top-0 z-10">
-
-      
       <Link to="/" className="text-2xl font-semibold text-gray-800">
         SnapCart
       </Link>
@@ -38,9 +63,49 @@ const TopNav = () => {
       </div>
 
       <div className="flex items-center gap-6 text-gray-700 text-sm font-medium relative">
-        <div className="flex items-center gap-1 rounded p-2 text-xs duration-300 hover:bg-slate-100 cursor-pointer">
-          <FiUser size={18} />
-          <span>Account</span>
+        
+        <div className="relative">
+          <div
+            className="flex items-center gap-2 rounded p-2 text-xs duration-300 hover:bg-slate-100 cursor-pointer"
+            onClick={toggleDropdown}
+          >
+            <FiUser size={18} />
+            {user ? (
+              <>
+                <span>Hello, {user.name}</span>
+                <FaChevronDown size={12} />
+              </>
+            ) : (
+              <Link to="/auth" className="underline text-blue-500">
+                Login
+              </Link>
+            )}
+          </div>
+
+          {isDropdownOpen && user && (
+            <div className="absolute right-0 mt-2 bg-white shadow-md rounded-md border text-sm z-20 w-40">
+              <Link
+                to="/account"
+                className="block px-4 py-2 hover:bg-gray-100"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                My Account
+              </Link>
+              <Link
+                to="/orders"
+                className="block px-4 py-2 hover:bg-gray-100"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                Orders
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-500"
+              >
+                Logout
+              </button>
+            </div>
+          )}
         </div>
 
         <div
@@ -54,11 +119,6 @@ const TopNav = () => {
               {itemCount}
             </span>
           )}
-        </div>
-
-        <div className="flex items-center gap-1 rounded p-2 text-xs duration-300 hover:bg-slate-100 cursor-pointer">
-          <FiLayers size={18} />
-          <span>Compare</span>
         </div>
       </div>
 
