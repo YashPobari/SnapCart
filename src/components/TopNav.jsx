@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FiUser, FiShoppingCart} from "react-icons/fi";
+import { FiUser, FiShoppingCart } from "react-icons/fi";
 import { FaChevronDown } from "react-icons/fa";
 import CartPopup from "../pages/CartPopup";
 import { useCart } from "../context/CartContext";
@@ -11,6 +11,8 @@ const TopNav = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { cartItems } = useCart();
   const [user, setUser] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const locationInputRef = useRef(null);
   const navigate = useNavigate();
 
   const toggleCart = () => setIsCartOpen((prev) => !prev);
@@ -42,6 +44,39 @@ const TopNav = () => {
     fetchUser();
   }, []);
 
+
+  useEffect(() => {
+    let autocomplete;
+    let listener;
+  
+    if (window.google && window.google.maps && locationInputRef.current) {
+      autocomplete = new window.google.maps.places.Autocomplete(
+        locationInputRef.current,
+        {
+          types: ["geocode"],
+          componentRestrictions: { country: "in" },
+        }
+      );
+  
+      listener = autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace();
+        const address = place?.formatted_address || place?.name;
+        if (address) {
+          setSelectedLocation(address);
+          console.log("Selected Location:", address);
+        }
+      });
+    }
+  
+    return () => {
+      if (listener) {
+        window.google.maps.event.removeListener(listener);
+      }
+    };
+  }, []);
+  
+
+
   return (
     <div className="bg-white px-6 py-3 shadow-sm flex items-center justify-between border-b sticky top-0 z-10">
       <Link to="/" className="text-2xl font-semibold text-gray-800">
@@ -50,20 +85,24 @@ const TopNav = () => {
 
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 flex-1 mx-6">
         <div className="text-sm text-gray-600 flex items-center gap-2">
-          <span className="font-semibold text-black">Delivery in null minutes</span>
+          <span className="font-semibold text-black">
+            Delivery in {selectedLocation || "null"} minutes
+          </span>
           <span className="border px-2 py-1 rounded-md border-gray-300 flex items-center gap-2">
             Select Your Location <FaChevronDown size={12} />
           </span>
         </div>
+
+
         <input
+          ref={locationInputRef}
           type="text"
-          placeholder='Search for "beverages"'
+          placeholder='Search for your delivery location'
           className="w-full sm:w-[60%] px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       </div>
 
       <div className="flex items-center gap-6 text-gray-700 text-sm font-medium relative">
-        
         <div className="relative">
           <div
             className="flex items-center gap-2 rounded p-2 text-xs duration-300 hover:bg-slate-100 cursor-pointer"

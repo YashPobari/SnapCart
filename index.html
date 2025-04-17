@@ -1,16 +1,26 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/public/snapcart_logo.png" class="w-full"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      SnapCart - Grocery Delivery 
-    </title>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/public/snapcart_logo.png" class="w-full" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    SnapCart - Grocery Delivery
+  </title>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8cIQPc-Te3kBOs_fpKxWcixU8NKmiDTM&libraries=places"
+    async 
+    defer
+    ></script>
+  <script type="module" src="https://unpkg.com/@googlemaps/extended-component-library@latest"></script>
+
+
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>
