@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import { appwriteDatabases } from "../appwrite/database";
 import { Query } from "appwrite";
 import TopNav from "../components/TopNav";
 import ProductItem from "../components/ProductItem";
-import Spinner from "../components/Spinner"; // ← Import spinner
+import Spinner from "../components/Spinner"; 
 
 const CategoryPage = () => {
   const { categoryId } = useParams();
