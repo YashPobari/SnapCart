@@ -131,7 +131,6 @@ const TopNav = () => {
           <gmp-place-autocomplete></gmp-place-autocomplete>
         </div>
 
-
         <div className="relative w-full sm:w-[60%]">
           <input
             type="text"
