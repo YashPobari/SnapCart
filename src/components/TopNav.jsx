@@ -46,35 +46,47 @@ const TopNav = () => {
 
 
   useEffect(() => {
-    let autocomplete;
     let listener;
-  
-    if (window.google && window.google.maps && locationInputRef.current) {
-      autocomplete = new window.google.maps.places.Autocomplete(
-        locationInputRef.current,
-        {
-          types: ["geocode"],
-          componentRestrictions: { country: "in" },
-        }
-      );
-  
-      listener = autocomplete.addListener("place_changed", () => {
-        const place = autocomplete.getPlace();
-        const address = place?.formatted_address || place?.name;
-        if (address) {
-          setSelectedLocation(address);
-          console.log("Selected Location:", address);
-        }
-      });
+
+    async function loadGoogleMapLocations() {
+      let autocomplete;
+
+      if (window.google && window.google.maps && locationInputRef.current) {
+        const { PlaceAutocompleteElement }  = await window.google.maps.importLibrary("places");
+
+        autocomplete = new PlaceAutocompleteElement(
+          {
+            types: ["geocode"],
+            componentRestrictions: { country: "in" },
+          }
+        );
+        
+        listener = autocomplete.addListener("places_changed", () => {
+          const place = autocomplete.getPlace();
+          const address = place?.formatted_address || place?.name;
+          if (address) {
+            setSelectedLocation(address);
+            console.log("Selected Location:", address);
+          }
+        });
+
+        const input = document.querySelector(".widget-container .input-container input");
+        console.log(input);
+        input.setAttribute("placeholder", "Select your location")
+
+        
+      }
     }
-  
+
+    loadGoogleMapLocations();
+
     return () => {
       if (listener) {
         window.google.maps.event.removeListener(listener);
       }
     };
   }, []);
-  
+
 
 
   return (
@@ -85,19 +97,19 @@ const TopNav = () => {
 
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 flex-1 mx-6">
         <div className="text-sm text-gray-600 flex items-center gap-2">
-          <span className="font-semibold text-black">
+          <span className="font-normal text-black">
             Delivery in {selectedLocation || "null"} minutes
           </span>
-          <span className="border px-2 py-1 rounded-md border-gray-300 flex items-center gap-2">
+          <gmp-place-autocomplete></gmp-place-autocomplete>
+          {/* <span className="border px-2 py-1 rounded-md border-gray-300 flex items-center gap-2">
             Select Your Location <FaChevronDown size={12} />
-          </span>
+            </span> */}
         </div>
 
 
         <input
-          ref={locationInputRef}
           type="text"
-          placeholder='Search for your delivery location'
+          placeholder='Search for "Beverages"'
           className="w-full sm:w-[60%] px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       </div>
