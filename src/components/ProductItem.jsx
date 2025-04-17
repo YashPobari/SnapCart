@@ -23,7 +23,7 @@ const ProductItem = ({ product }) => {
   }
 
   return (
-    <div className="product flex items-center flex-col bg-white p-4 rounded-xl shadow-md w-52 hover:shadow-lg transition duration-300">
+    <div className="product flex items-center flex-col bg-white p-4 text-center rounded-xl shadow-md w-52 hover:shadow-lg transition duration-300">
       <Link to={`/product/${product.$id}`} className="h-56">
         <img
           src={product.imageUrl || "https://via.placeholder.com/150"}
