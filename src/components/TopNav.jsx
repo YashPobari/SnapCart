@@ -5,6 +5,7 @@ import { FaChevronDown } from "react-icons/fa";
 import CartPopup from "../pages/CartPopup";
 import { useCart } from "../context/CartContext";
 import { account } from "../appwrite/config";
+import { getProducts } from "../appwrite/products";
 
 const TopNav = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -13,6 +14,9 @@ const TopNav = () => {
   const [user, setUser] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState("");
   const locationInputRef = useRef(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [allProducts, setAllProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const navigate = useNavigate();
 
   const toggleCart = () => setIsCartOpen((prev) => !prev);
@@ -44,6 +48,30 @@ const TopNav = () => {
     fetchUser();
   }, []);
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const products = await getProducts();
+        setAllProducts(products);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      setFilteredProducts([]);
+    } else {
+      const results = allProducts.filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredProducts(results);
+    }
+  }, [searchQuery, allProducts]);
+
+
 
   useEffect(() => {
     let listener;
@@ -52,7 +80,7 @@ const TopNav = () => {
       let autocomplete;
 
       if (window.google && window.google.maps && locationInputRef.current) {
-        const { PlaceAutocompleteElement }  = await window.google.maps.importLibrary("places");
+        const { PlaceAutocompleteElement } = await window.google.maps.importLibrary("places");
 
         autocomplete = new PlaceAutocompleteElement(
           {
@@ -60,7 +88,7 @@ const TopNav = () => {
             componentRestrictions: { country: "in" },
           }
         );
-        
+
         listener = autocomplete.addListener("places_changed", () => {
           const place = autocomplete.getPlace();
           const address = place?.formatted_address || place?.name;
@@ -74,7 +102,7 @@ const TopNav = () => {
         console.log(input);
         input.setAttribute("placeholder", "Select your location")
 
-        
+
       }
     }
 
@@ -101,17 +129,35 @@ const TopNav = () => {
             Delivery in {selectedLocation || "null"} minutes
           </span>
           <gmp-place-autocomplete></gmp-place-autocomplete>
-          {/* <span className="border px-2 py-1 rounded-md border-gray-300 flex items-center gap-2">
-            Select Your Location <FaChevronDown size={12} />
-            </span> */}
         </div>
 
 
-        <input
-          type="text"
-          placeholder='Search for "Beverages"'
-          className="w-full sm:w-[60%] px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+        <div className="relative w-full sm:w-[60%]">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder='Search for "Basmati Rice"'
+            className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+
+
+          {searchQuery && filteredProducts.length > 0 && (
+            <div className="absolute left-0 right-0 bg-white shadow-md border mt-1 rounded-md max-h-64 overflow-y-auto z-50">
+              {filteredProducts.map((product) => (
+                <Link
+                  key={product.$id}
+                  to={`/product/${product.$id}`}
+                  className="block px-4 py-2 hover:bg-gray-100 text-sm text-gray-700"
+                  onClick={() => setSearchQuery("")}
+                >
+                  {product.name}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+
       </div>
 
       <div className="flex items-center gap-6 text-gray-700 text-sm font-medium relative">
