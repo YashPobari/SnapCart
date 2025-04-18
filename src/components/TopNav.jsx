@@ -6,6 +6,7 @@ import CartPopup from "../pages/CartPopup";
 import { useCart } from "../context/CartContext";
 import { account } from "../appwrite/config";
 import { getProducts } from "../appwrite/products";
+import {  PlacePicker } from '@googlemaps/extended-component-library/react';
 
 const TopNav = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -15,6 +16,7 @@ const TopNav = () => {
   const [selectedLocation, setSelectedLocation] = useState("");
   const locationInputRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const navigate = useNavigate();
@@ -43,6 +45,28 @@ const TopNav = () => {
       console.error("Logout failed:", error);
     }
   };
+
+  const placeholders = [
+    'Basmati Rice',
+    'Fresh Bananas',
+    'Tomatoes',
+    'Balaji Wafers',
+    'Thumsup',
+    'Quartz Watch',
+    'Jean Paul Perfume',
+    'Hell Energy Drink',
+    'Wheat'
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPlaceholderIndex((prevIndex) => (prevIndex + 1) % placeholders.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+
 
   useEffect(() => {
     fetchUser();
@@ -98,11 +122,11 @@ const TopNav = () => {
           }
         });
 
-        const input = document.querySelector(".widget-container .input-container input");
-        console.log(input);
-        input.setAttribute("placeholder", "Select your location")
-
-
+        const input = document.querySelector('input[aria-autocomplete="list"]');
+        console.log("input: ", input);
+        if (input) {
+          input.placeholder = "Search for a location...";
+        }
       }
     }
 
@@ -115,8 +139,6 @@ const TopNav = () => {
     };
   }, []);
 
-
-
   return (
     <div className="bg-white px-6 py-3 shadow-sm flex items-center justify-between border-b sticky top-0 z-10">
       <Link to="/" className="text-2xl font-semibold text-gray-800">
@@ -124,24 +146,54 @@ const TopNav = () => {
       </Link>
 
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 flex-1 mx-6">
-        <div className="text-sm text-gray-600 flex items-center gap-2">
+        {/* <div className="text-sm text-gray-600 flex items-center gap-2">
           <span className="font-normal text-black">
             Delivery in {selectedLocation || "null"} minutes
           </span>
-          <gmp-place-autocomplete 
-          class="input-container"
-          input=""
-          placeholder="Test"
-          ></gmp-place-autocomplete>
+          <gmp-place-autocomplete className="custom-map-autofill"></gmp-place-autocomplete>
+        </div> */}
+
+       
+        <div className="container" style={{ width: '400px', display: 'flex', flexDirection: 'column', fontSize: '1rem', gap: '10px' }}>
+          <div className="text-sm text-gray-600 flex items-center gap-2 w-full">
+            <span className="font-normal text-black mt-4 whitespace-nowrap">
+              Delivery in
+            </span>
+             <PlacePicker
+              country={["IN"]}
+              placeholder="Enter your location"
+              onPlaceChange={(e) => {
+                const address = e?.formattedAddress || '';
+                setSelectedLocation(address);
+                console.log("Selected Location:", address);
+              }}
+              style={{
+                flex: 1,
+                height: "40px",
+                borderRadius: "6px",
+                padding: "0 10px",
+                marginTop: "16px"
+              }}
+            /> 
+          </div>
+          <div className="result" style={{ height: '1rem', padding: '8px' }}>
+            {selectedLocation}
+          </div>
         </div>
 
+
         <div className="relative w-full sm:w-[60%]">
+          <img
+            src="https://cdn-icons-png.flaticon.com/128/149/149852.png"
+            alt="search"
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 opacity-60"
+          />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder='Search for "Basmati Rice"'
-            className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder={`Search for "${placeholders[placeholderIndex]}"`}
+            className="w-full pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
 
 
