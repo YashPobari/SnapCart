@@ -154,9 +154,9 @@ const TopNav = () => {
         </div> */}
 
        
-        <div className="container" style={{ width: '400px', display: 'flex', flexDirection: 'column', fontSize: '1rem', gap: '10px' }}>
+        <div className="flex flex-col items-center gap-2.5 w-[400px] text-base" >
           <div className="text-sm text-gray-600 flex items-center gap-2 w-full">
-            <span className="font-normal text-black mt-4 whitespace-nowrap">
+            <span className="font-normal text-black whitespace-nowrap">
               Delivery in
             </span>
              <PlacePicker
@@ -172,12 +172,9 @@ const TopNav = () => {
                 height: "40px",
                 borderRadius: "6px",
                 padding: "0 10px",
-                marginTop: "16px"
+                
               }}
             /> 
-          </div>
-          <div className="result" style={{ height: '1rem', padding: '8px' }}>
-            {selectedLocation}
           </div>
         </div>
 

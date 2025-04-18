@@ -7,9 +7,9 @@ const Footer = () => {
         <div className="flex justify-between items-center mb-4">
           <p>&copy; 2025 SnapCart. All rights reserved.</p>
           <div className="flex gap-4">
-            <a href="#" className="text-white hover:text-gray-400">Facebook</a>
-            <a href="#" className="text-white hover:text-gray-400">Twitter</a>
-            <a href="#" className="text-white hover:text-gray-400">Instagram</a>
+            <a href="https://dribbble.com/search/e-commerce-website-zepto" target="_blank" className="text-white hover:text-gray-400">Facebook</a>
+            <a href="#" target="_blank" className="text-white hover:text-gray-400">Twitter</a>
+            <a href="#" target="_blank" className="text-white hover:text-gray-400">Instagram</a>
           </div>
         </div>
         <div className="text-center">
