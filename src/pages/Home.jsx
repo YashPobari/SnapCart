@@ -23,7 +23,7 @@ const Home = () => {
             <Header toggleSidebar={toggleSidebar} />
             <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
-            <main className="pt-16 px-4 sm:px-8">
+            <main className="pt-0 px-4 sm:px-8">
                 <HeroSection />
                 <div>
                 <Categories onSelectCategory={handleCategorySelect} />

@@ -50,7 +50,7 @@ const CategoryPage = () => {
     <div className="relative min-h-screen bg-gray-100">
       <TopNav />
 
-      <main className="pt-20 px-4 sm:px-8">
+      <main className="pt-16 px-4 sm:px-8">
         <h2 className="text-3xl font-bold mb-8 text-center capitalize">
           Products in "{categoryName}"
         </h2>
