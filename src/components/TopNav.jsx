@@ -128,7 +128,11 @@ const TopNav = () => {
           <span className="font-normal text-black">
             Delivery in {selectedLocation || "null"} minutes
           </span>
-          <gmp-place-autocomplete></gmp-place-autocomplete>
+          <gmp-place-autocomplete 
+          class="input-container"
+          input=""
+          placeholder="Test"
+          ></gmp-place-autocomplete>
         </div>
 
         <div className="relative w-full sm:w-[60%]">
