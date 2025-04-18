@@ -28,7 +28,7 @@ const CategoryNav = () => {
 
   return (
     <div className="relative flex justify-between border-b bg-white px-8 py-2.5 max-lg:hidden max-md:flex max-md:px-2">
-      <div className="flex space-x-4 overflow-x-auto scrollbar-hide">
+      <div className="flex gap-2 overflow-x-auto scrollbar-hide">
         {categories.map((category) => (
           <div
             key={category.$id}

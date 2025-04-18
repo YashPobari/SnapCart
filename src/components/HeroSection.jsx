@@ -85,7 +85,7 @@ const HeroSection = () => {
   }
 
   return (
-    <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw]">
+    <div className="w-full relative ">
       <Swiper
         ref={swiperRef}
         modules={[Navigation, Pagination, Autoplay]}
