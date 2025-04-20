@@ -1,15 +1,18 @@
-import React from "react";
+import React, {useState} from "react";
 import { useForm } from "react-hook-form";
 import { useCart } from "../context/CartContext";
 import Header from "../components/Header";
+import parsePhoneNumber from "libphonenumber-js";
 
 const Checkout = () => {
     const { cartItems } = useCart();
+    const [countryCode, setCountryCode] = useState("");
 
     const {
         register,
         handleSubmit,
         formState: { errors },
+        setValue,
     } = useForm();
 
     const totalAmount = cartItems.reduce(
@@ -68,12 +71,38 @@ const Checkout = () => {
 
                         <div>
                             <input
-                                {...register("phoneNumber", { required: "Phone number is required" })}
+                                {...register("phoneNumber", {
+                                    required: "Phone number is required",
+                                    pattern: {
+                                        value: /^[6-9]\d{9}$/,
+                                        message: "Enter a valid 10-digit Indian phone number",
+                                    },
+                                    maxLength: {
+                                        value: 10,
+                                        message: "Phone number should be 10 digits",
+                                    },
+                                    onChange: (e) => {
+                                        const number = e.target.value;
+                                        setValue("phoneNumber", number);
+                                        if (number.length === 10) {
+                                            const fullNumber = `+91${number}`;
+                                            try {
+                                                const phoneNumber = parsePhoneNumber(fullNumber);
+                                                setCountryCode(phoneNumber?.country || "");
+                                            } catch {
+                                                setCountryCode("");
+                                            }
+                                        } else {
+                                            setCountryCode("");
+                                        }
+                                    },
+                                })}
                                 type="tel"
                                 placeholder="Phone Number"
                                 className="w-full border px-4 py-2 rounded"
                             />
                             {errors.phoneNumber && <p className="text-red-500 text-sm">{errors.phoneNumber.message}</p>}
+                            {countryCode && <p className="text-sm text-gray-500 mt-1">Country: {countryCode}</p>}
                         </div>
 
                         <div>

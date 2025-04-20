@@ -40,7 +40,7 @@ const TopNav = () => {
       await account.deleteSession("current");
       setUser(null);
       alert("Logged out successfully.");
-      navigate("/auth");
+      navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);
     }
