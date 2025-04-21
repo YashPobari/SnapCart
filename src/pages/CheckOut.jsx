@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const Checkout = () => {
     const { cartItems, clearCart } = useCart();
     const [countryCode, setCountryCode] = useState("");
-    const [location, setLocation] = useState(null);
+    const [ location, setLocation] = useState(null);
     const navigate = useNavigate();
 
     const {
