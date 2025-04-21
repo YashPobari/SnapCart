@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useCart } from "../context/CartContext";
 import Header from "../components/Header";
 import parsePhoneNumber from "libphonenumber-js";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
-    const { cartItems, clearCart } = useCart(); 
+    const { cartItems, clearCart } = useCart();
     const [countryCode, setCountryCode] = useState("");
-    const navigate = useNavigate(); 
+    const [location, setLocation] = useState(null);
+    const navigate = useNavigate();
 
     const {
         register,
@@ -18,12 +19,79 @@ const Checkout = () => {
     } = useForm();
 
     const totalAmount = cartItems.reduce(
-        (acc, item) => {
-            console.log("item ->", item);
-            return acc + item.productprice * item.quantity;
-        },
+        (acc, item) => acc + item.productprice * item.quantity,
         0
     );
+
+    useEffect(() => {
+        const getLocation = () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    const { latitude, longitude } = position.coords;
+                    try {
+                        const response = await fetch(
+                            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyB8cIQPc-Te3kBOs_fpKxWcixU8NKmiDTM`
+                        );
+                        const data = await response.json();
+
+                        if (data.results.length > 0) {
+                            const addressComponents = data.results[0].address_components;
+                            const city = addressComponents.find((component) =>
+                                component.types.includes("locality")
+                            )?.long_name;
+                            const state = addressComponents.find((component) =>
+                                component.types.includes("administrative_area_level_1")
+                            )?.long_name;
+                            const country = addressComponents.find((component) =>
+                                component.types.includes("country")
+                            )?.long_name;
+                            const pincode = addressComponents.find((component) =>
+                                component.types.includes("postal_code")
+                            )?.long_name;
+
+                            if (city && state && country) {
+                                const fullAddress = `${city}, ${state}, ${country}, ${pincode || ""}`;
+
+                                setLocation({
+                                    city,
+                                    state,
+                                    country,
+                                    pincode,
+                                    fullAddress,
+                                    latitude,
+                                    longitude,
+                                });
+
+
+                                setValue("city", city);
+                                setValue("state", state);
+                                setValue("address", fullAddress);
+                                setValue("pincode", pincode);
+
+
+                                localStorage.setItem(
+                                    "snapcart_shipping",
+                                    JSON.stringify({
+                                        city,
+                                        state,
+                                        country,
+                                        pincode,
+                                        fullAddress,
+                                    })
+                                );
+                            }
+                        }
+                    } catch (error) {
+                        console.error("Error fetching location from Google Maps API:", error);
+                    }
+                });
+            } else {
+                console.log("Geolocation is not supported by this browser.");
+            }
+        };
+
+        getLocation();
+    }, [setValue]);
 
     const onSubmit = (data) => {
         const options = {
