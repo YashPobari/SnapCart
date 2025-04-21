@@ -95,7 +95,7 @@ const Checkout = () => {
 
     const onSubmit = (data) => {
         const options = {
-            key: "YOUR_RAZORPAY_KEY",
+            key: "rzp_test_ECy27TxhqXl4eG",
             amount: totalAmount * 100,
             currency: "INR",
             name: "SnapCart",
@@ -121,6 +121,9 @@ const Checkout = () => {
                 localStorage.setItem("snapcart_order", JSON.stringify(orderData));
 
                 clearCart();
+                console.log("clearCart:-", clearCart);
+                
+                localStorage.removeItem("snapcart_cart");
                 navigate("/thank-you");
             },
             prefill: {
