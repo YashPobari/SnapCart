@@ -1,12 +1,14 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useCart } from "../context/CartContext";
 import Header from "../components/Header";
 import parsePhoneNumber from "libphonenumber-js";
+import { useNavigate } from "react-router-dom"; 
 
 const Checkout = () => {
-    const { cartItems } = useCart();
+    const { cartItems, clearCart } = useCart(); 
     const [countryCode, setCountryCode] = useState("");
+    const navigate = useNavigate(); 
 
     const {
         register,
@@ -17,8 +19,8 @@ const Checkout = () => {
 
     const totalAmount = cartItems.reduce(
         (acc, item) => {
-            console.log("item ->", item)
-            return acc + item.productprice * item.quantity
+            console.log("item ->", item);
+            return acc + item.productprice * item.quantity;
         },
         0
     );
@@ -34,6 +36,24 @@ const Checkout = () => {
             handler: function (response) {
                 alert("Payment Successful!");
                 console.log(response);
+
+                const orderData = {
+                    fullName: data.fullName,
+                    phoneNumber: data.phoneNumber,
+                    address: data.address,
+                    city: data.city,
+                    state: data.state,
+                    pincode: data.pincode,
+                    items: cartItems,
+                    totalAmount,
+                    paymentId: response.razorpay_payment_id,
+                    createdAt: new Date().toISOString(),
+                };
+
+                localStorage.setItem("snapcart_order", JSON.stringify(orderData));
+
+                clearCart();
+                navigate("/thank-you");
             },
             prefill: {
                 name: data.fullName,
