@@ -6,7 +6,7 @@ import CartPopup from "../pages/CartPopup";
 import { useCart } from "../context/CartContext";
 import { account } from "../appwrite/config";
 import { getProducts } from "../appwrite/products";
-import {  PlacePicker } from '@googlemaps/extended-component-library/react';
+import { PlacePicker } from '@googlemaps/extended-component-library/react';
 
 const TopNav = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -153,28 +153,46 @@ const TopNav = () => {
           <gmp-place-autocomplete className="custom-map-autofill"></gmp-place-autocomplete>
         </div> */}
 
-       
+
         <div className="flex flex-col items-center gap-2.5 w-[400px] text-base" >
           <div className="text-sm text-gray-600 flex items-center gap-2 w-full">
             <span className="font-normal text-black whitespace-nowrap">
               Delivery in
             </span>
-             <PlacePicker
+            <PlacePicker
               country={["IN"]}
               placeholder="Enter your location"
               onPlaceChange={(e) => {
-                const address = e?.formattedAddress || '';
+                const address = e?.formattedAddress || "";
+                const components = e?.addressComponents || [];
+
+                // Extract city, state, pincode
+                const getComponent = (type) =>
+                  components.find((c) => c.types.includes(type))?.longText || "";
+
+                const city = getComponent("locality") || getComponent("administrative_area_level_2");
+                const state = getComponent("administrative_area_level_1");
+                const pincode = getComponent("postal_code");
+
+                const fullLocation = {
+                  address,
+                  city,
+                  state,
+                  pincode,
+                };
+
+                console.log("📍 Full Location Data:", fullLocation);
+
                 setSelectedLocation(address);
-                console.log("Selected Location:", address);
+
               }}
               style={{
                 flex: 1,
                 height: "40px",
                 borderRadius: "6px",
                 padding: "0 10px",
-                
               }}
-            /> 
+            />
           </div>
         </div>
 
