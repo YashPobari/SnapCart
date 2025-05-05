@@ -57,7 +57,7 @@ const CartPopup = ({ isOpen, onClose }) => {
       className="fixed top-0 right-0 w-[400px] h-full bg-white shadow-lg border-l z-50 overflow-y-auto flex flex-col"
     >
       <div className="flex justify-between items-center p-4 border-b">
-        <h2 className="text-xl font-semibold">Your Cart</h2>
+        <h2 className="text-xl font-semibold">My Cart</h2>
         <button onClick={onClose} className="text-red-500 font-bold text-xl">
           &times;
         </button>
